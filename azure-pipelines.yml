@@ -160,8 +160,8 @@ steps:
     dumpPayloadToConsole: false
     dumpPayloadToFile: false
     replaceFile: true
-    getParentsAndChildren: false
-    getAllParents: false
+    getParentsAndChildren: true
+    getAllParents: true
     getIndirectPullRequests: false
     stopOnError: false
     considerPartiallySuccessfulReleases: false
