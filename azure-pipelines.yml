@@ -79,3 +79,8 @@ steps:
     considerPartiallySuccessfulReleases: false
     checkForManuallyLinkedWI: false
     wiqlFromTarget: 'WorkItems'
+- task: PublishBuildArtifacts@1
+  inputs:
+    pathToPublish: '$(Build.ArtifactStagingDirectory)'
+    artifactName: 'releasenote'
+    publishLocation: 'Container'
