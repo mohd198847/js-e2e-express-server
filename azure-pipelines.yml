@@ -37,12 +37,37 @@ steps:
     outputfile: 'releasenote'
     templateLocation: 'InLine'
     inlinetemplate: |
-     
-      ### Associated change sets/commits  
-      @@CSLOOP@@  
-      * **ID $($csdetail.changesetid)$($csdetail.commitid)$($csdetail.id)** $($csdetail.comment)    
-      @@CSLOOP@@  
-
+      # Notes for release  {{releaseDetails.releaseDefinition.name}}    
+      **Release Number**  : {{releaseDetails.name}}
+      **Release completed** : {{releaseDetails.modifiedOn}}     
+      **Build Number**: {{buildDetails.id}}
+      **Compared Release Number**  : {{compareReleaseDetails.name}}    
+      **Build Trigger PR Number**: {{lookup buildDetails.triggerInfo 'pr.number'}} 
+      
+      # Associated Pull Requests ({{pullRequests.length}})
+      {{#forEach pullRequests}}
+      {{#if isFirst}}### Associated Pull Requests (only shown if  PR) {{/if}}
+      *  **{{this.pullRequestId}}** {{this.title}}
+      {{/forEach}}
+      
+      # Builds with associated WI/CS ({{builds.length}})
+      {{#forEach builds}}
+      {{#if isFirst}}## Builds {{/if}}
+      -  Build {{this.build.buildNumber}}
+      {{#forEach this.commits}}
+         - CS {{this.id}}
+            - **Message:** {{this.message}}
+      {{/forEach}}
+      {{#forEach this.workitems}}
+         - WI {{this.id}}
+            - **Title** {{lookup this.fields 'System.Title'}}
+      {{/forEach}} 
+      {{#forEach this.tests}}
+         - Test {{this.id}} 
+            -  **Name** {{this.testCase.name}}
+            -  **Outcome** {{this.outcome}}
+      {{/forEach}} 
+      {{/forEach}}
     checkStage: true
     dumpPayloadToConsole: false
     dumpPayloadToFile: false
