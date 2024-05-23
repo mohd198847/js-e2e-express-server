@@ -38,17 +38,15 @@ steps:
     outputVariableName: 'releasenotes'
     templateLocation: 'InLine'
     inlinetemplate: |
-      # Release notes for build {{defname}}
+      #Release notes for build $defname  
+      **Build Number**  : $($build.buildnumber)    
+      **Build started** : $("{0:dd/MM/yy HH:mm:ss}" -f [datetime]$build.startTime)     
+      **Source Branch** : $($build.sourceBranch)  
       
-      **Build Number**: {{build.buildnumber}}
-      **Build started**: {{build.startTime}}
-      **Source Branch**: {{build.sourceBranch}}
-      
-      ### Associated change sets/commits
-      
-      {{#each changesets}}
-      * **ID {{this.changesetid}}{{this.commitid}}** {{this.comment}}
-      {{/each}}
+      ###Associated change sets/commits  
+      @@CSLOOP@@  
+      * **ID $($csdetail.changesetid)$($csdetail.commitid)** $($csdetail.comment)    
+      @@CSLOOP@@
     checkStage: true
     dumpPayloadToConsole: false
     dumpPayloadToFile: false
