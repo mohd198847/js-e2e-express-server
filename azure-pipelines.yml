@@ -34,7 +34,7 @@ steps:
   displayName: 'Publish npm artifact'
 - task: XplatGenerateReleaseNotes@4
   inputs:
-    outputfile: 'releasenote'
+    outputfile: 'releasenote.md'
     templateLocation: 'InLine'
     inlinetemplate: |
       # Notes for release  {{releaseDetails.releaseDefinition.name}}    
@@ -82,5 +82,5 @@ steps:
 - task: PublishBuildArtifacts@1
   inputs:
     pathToPublish: '$(Build.ArtifactStagingDirectory)'
-    artifactName: 'releasenote'
+    artifactName: 'releasenotes'
     publishLocation: 'Container'
